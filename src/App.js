@@ -2,15 +2,19 @@ import './App.css';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
-  const [ascentsBySeason, setAscentsBySeason] = useState([]);
-  const [seasons, setSeasons] = useState([]);
+  const [ascents, setAscents] = useState([]);
+  const [seasonList, setSeasonList] = useState([]);
 
   useEffect(() => {
-
-    
-
+    axios.get('http://localhost:5000/ascentsBySeason').then(({ data }) => {
+      console.log(data);
+      const { ascentsBySeason, seasons } = data;
+      setSeasonList(seasons);
+      setAscents(ascentsBySeason);
+    });
   }, []);
 
   const graphOptions = {
@@ -20,12 +24,12 @@ function App() {
     series: [
       {
         type: 'column',
-        data: [1, 2, 3],
+        data: ascents,
         name: 'ascents',
       },
     ],
     xAxis: {
-      categories: [2015, 2016, 2017],
+      categories: seasonList,
     },
     yAxis: {
       title: { text: 'Number of ascents' },
@@ -36,7 +40,9 @@ function App() {
     <>
       <header>Hi there! 🧗 📈</header>
       <main>
-        <HighchartsReact highcharts={Highcharts} options={graphOptions} />
+        {ascents.length && seasonList.length && (
+          <HighchartsReact highcharts={Highcharts} options={graphOptions} />
+        )}
       </main>
       <footer>Finally a footer that stays down! Awesome ✨</footer>
     </>
