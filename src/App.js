@@ -4,6 +4,15 @@ import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useState } from 'react';
 
 function App() {
+  const [ascentsBySeason, setAscentsBySeason] = useState([]);
+  const [seasons, setSeasons] = useState([]);
+
+  useEffect(() => {
+
+    
+
+  }, []);
+
   const graphOptions = {
     title: {
       text: 'Ascent by season',
