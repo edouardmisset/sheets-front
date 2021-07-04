@@ -18,3 +18,7 @@ code {
   grid-template-rows: auto 1fr auto;
   background-color: #282c34;
 }
+
+.highcharts-credits {
+  display: none;
+}
